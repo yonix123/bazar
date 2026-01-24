@@ -144,7 +144,7 @@ export async function createSellListing(input: CreateSellListingInput) {
     return { data: null, error: 'Unauthorized' };
   }
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   // Убедимся что профиль существует
   const { data: profile } = await supabase
@@ -161,6 +161,7 @@ export async function createSellListing(input: CreateSellListingInput) {
       email: user?.emailAddresses[0]?.emailAddress || '',
       display_name: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : null,
       avatar_url: user?.imageUrl || null,
+      team_number: null,
     });
   }
 
@@ -192,7 +193,7 @@ export async function createBuyRequest(input: CreateBuyRequestInput) {
     return { data: null, error: 'Unauthorized' };
   }
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   const { data, error } = await supabase
     .from('buy_requests')
@@ -225,7 +226,7 @@ export async function updateSellListing(
     return { data: null, error: 'Unauthorized' };
   }
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   // Verify ownership
   const { data: existing } = await supabase
@@ -265,7 +266,7 @@ export async function deleteSellListing(id: string) {
     return { success: false, error: 'Unauthorized' };
   }
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   // Verify ownership
   const { data: existing } = await supabase
@@ -302,7 +303,7 @@ export async function deleteBuyRequest(id: string) {
     return { success: false, error: 'Unauthorized' };
   }
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   // Verify ownership
   const { data: existing } = await supabase

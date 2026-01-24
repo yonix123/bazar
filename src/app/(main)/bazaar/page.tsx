@@ -7,7 +7,7 @@ import { SellListingCard, BuyRequestCard } from '@/components/listings/listing-c
 import { SkeletonListingGrid } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { getSellListings, getBuyRequests } from '@/lib/actions/listings';
-import type { BazaarFilters } from '@/types/database';
+import type { BazaarFilters, SellListing, BuyRequest } from '@/types/database';
 
 interface BazaarPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -32,8 +32,8 @@ async function ListingsGrid({ searchParams }: { searchParams: Record<string, str
   const showBuy = type === 'all' || type === 'buy';
 
   const [sellResult, buyResult] = await Promise.all([
-    showSell ? getSellListings(filters, page) : { data: [], count: 0, totalPages: 0 },
-    showBuy && type !== 'sell' ? getBuyRequests(page) : { data: [], count: 0, totalPages: 0 },
+    showSell ? getSellListings(filters, page) : Promise.resolve({ data: [] as SellListing[], count: 0, totalPages: 0, page: 0 }),
+    showBuy ? getBuyRequests(page) : Promise.resolve({ data: [] as BuyRequest[], count: 0, totalPages: 0, page: 0 }),
   ]);
 
   const totalItems = (showSell ? sellResult.count : 0) + (showBuy ? buyResult.count : 0);

@@ -9,7 +9,7 @@ import type { Profile } from '@/types/database';
 // Get current user's profile
 export async function getCurrentProfile(): Promise<{ data: Profile | null; error: string | null }> {
   const { userId } = await auth();
-  
+
   if (!userId) {
     return { data: null, error: 'Unauthorized' };
   }
@@ -53,12 +53,12 @@ export async function updateProfile(input: {
   team_number?: number | null;
 }): Promise<{ data: Profile | null; error: string | null }> {
   const { userId } = await auth();
-  
+
   if (!userId) {
     return { data: null, error: 'Unauthorized' };
   }
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   const { data, error } = await supabase
     .from('profiles')
@@ -85,7 +85,7 @@ export async function syncProfile(clerkUser: {
   last_name?: string | null;
   image_url?: string | null;
 }): Promise<{ data: Profile | null; error: string | null }> {
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   const email = clerkUser.email_addresses[0]?.email_address;
   if (!email) {
@@ -119,7 +119,7 @@ export async function syncProfile(clerkUser: {
 
 // Delete profile (called from webhook when user is deleted)
 export async function deleteProfile(userId: string): Promise<{ success: boolean; error: string | null }> {
-  const supabase = createAdminClient();
+  const supabase = createAdminClient() as any;
 
   const { error } = await supabase
     .from('profiles')

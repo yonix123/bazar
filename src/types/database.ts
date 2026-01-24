@@ -115,22 +115,50 @@ export interface Database {
         Row: Profile;
         Insert: Omit<Profile, 'created_at' | 'updated_at'>;
         Update: Partial<Omit<Profile, 'id' | 'created_at'>>;
+        Relationships: [];
       };
       sell_listings: {
         Row: SellListing;
         Insert: Omit<SellListing, 'id' | 'created_at' | 'updated_at' | 'owner'>;
         Update: Partial<Omit<SellListing, 'id' | 'owner_id' | 'created_at' | 'owner'>>;
+        Relationships: [
+          {
+            foreignKeyName: "sell_listings_owner_id_fkey";
+            columns: ["owner_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       buy_requests: {
         Row: BuyRequest;
         Insert: Omit<BuyRequest, 'id' | 'created_at' | 'updated_at' | 'owner'>;
         Update: Partial<Omit<BuyRequest, 'id' | 'owner_id' | 'created_at' | 'owner'>>;
+        Relationships: [
+          {
+            foreignKeyName: "buy_requests_owner_id_fkey";
+            columns: ["owner_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
       };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
     };
     Enums: {
       listing_category: ListingCategory;
       item_condition: ItemCondition;
       contact_type: ContactType;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
     };
   };
 }
