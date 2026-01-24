@@ -49,7 +49,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
 
   const categoryOptions = CATEGORIES.map(c => ({
     value: c.value,
-    label: `${c.icon} ${tCats(c.value)}`
+    label: tCats(c.value)
   }));
 
   const conditionOptions = CONDITIONS.map(c => ({

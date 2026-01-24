@@ -42,14 +42,19 @@ export function SellListingCard({ listing }: SellListingCardProps) {
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-foreground-subtle">
-              <span className="text-4xl">{categoryConfig.icon}</span>
+              <span className="text-4xl text-primary-300">
+                {/* Generic placeholder since emoji is removed */}
+                <div className="w-12 h-12 bg-primary-500/20 rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 border-2 border-primary-500 rounded-sm" />
+                </div>
+              </span>
             </div>
           )}
 
           {/* Badges overlay */}
           <div className="absolute top-3 left-3 flex flex-wrap gap-2">
             <Badge variant="primary" className="backdrop-blur-sm bg-primary-500/80">
-              {categoryConfig.icon} {tCategories(listing.category as any)}
+              {tCategories(listing.category as any)}
             </Badge>
           </div>
 

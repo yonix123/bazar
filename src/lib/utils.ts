@@ -27,7 +27,7 @@ export function formatRelativeDate(dateString: string): string {
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
   if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
   if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
-  
+
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -36,14 +36,14 @@ export function formatRelativeDate(dateString: string): string {
 }
 
 // Category display names and icons
-export const CATEGORY_CONFIG: Record<ListingCategory, { label: string; icon: string }> = {
-  motors: { label: 'Motors', icon: '⚡' },
-  sensors: { label: 'Sensors', icon: '📡' },
-  controllers: { label: 'Controllers', icon: '🎮' },
-  wheels: { label: 'Wheels', icon: '⚙️' },
-  structure: { label: 'Structure', icon: '🔩' },
-  electronics: { label: 'Electronics', icon: '💡' },
-  other: { label: 'Other', icon: '📦' },
+export const CATEGORY_CONFIG: Record<ListingCategory, { label: string }> = {
+  motors: { label: 'Motors' },
+  sensors: { label: 'Sensors' },
+  controllers: { label: 'Controllers' },
+  wheels: { label: 'Wheels' },
+  structure: { label: 'Structure' },
+  electronics: { label: 'Electronics' },
+  other: { label: 'Other' },
 };
 
 export const CATEGORIES = Object.entries(CATEGORY_CONFIG).map(([value, config]) => ({

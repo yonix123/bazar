@@ -27,7 +27,7 @@ export function ListingFilters() {
 
   const CATEGORY_OPTIONS = [
     { value: 'all', label: t('allCategories') },
-    ...CATEGORIES.map(c => ({ value: c.value, label: `${c.icon} ${tCategories(c.value as any)}` })),
+    ...CATEGORIES.map(c => ({ value: c.value, label: tCategories(c.value as any) })),
   ];
 
   const CONDITION_OPTIONS = [

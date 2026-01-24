@@ -1,4 +1,30 @@
 {
+    "Team": {
+        "title": "About Us",
+        "description": "We are a robotics team from RFMSH, students of grades 9-11. Participating in these competitions, our team strives not only to demonstrate engineering and programming skills but also to promote interest in science and technology among the younger generation. This year, we set high goals and are making every effort to raise the flag of Kazakhstan on the World stage again."
+    },
+    "AboutTeam": {
+        "badge": "About Our Mission",
+        "title": "Leveling the Playing Field for All Teams",
+        "p1": "We started this project because we saw firsthand how budget disparities affect FTC teams. While some teams have access to unlimited resources, others struggle to afford even basic components.",
+        "p2": "FTC Bazaar was born from a simple idea: <strong class='text-foreground'>what if teams could easily share resources?</strong> Parts that sit unused in one team's workshop could be exactly what another team needs to complete their robot.",
+        "p3": "Our platform is <strong class='text-foreground'>100% free</strong> and always will be. No listing fees, no transaction fees, no premium tiers. Just teams helping teams.",
+        "cta": "Join the Community",
+        "cards": {
+            "mission": {
+                "title": "Our Mission",
+                "desc": "To reduce inequality in FIRST Robotics by making parts more accessible and affordable for all teams, regardless of budget."
+            },
+            "builtBy": {
+                "title": "Built by Teams",
+                "desc": "Created and maintained by FTC team members who understand the challenges of building competitive robots on a tight budget."
+            },
+            "community": {
+                "title": "Community First",
+                "desc": "Every feature we build is driven by community feedback. We're here to serve the FTC community, not to make a profit."
+            }
+        }
+    },
     "Navbar": {
         "home": "Home",
         "bazaar": "Bazaar",

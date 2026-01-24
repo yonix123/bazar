@@ -71,7 +71,9 @@ export default async function ListingPage({ params }: ListingPageProps) {
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center bg-background-elevated text-foreground-subtle">
-                    <span className="text-6xl">{categoryConfig.icon}</span>
+                    <div className="w-20 h-20 bg-primary-500/20 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 border-2 border-primary-500 rounded-sm" />
+                    </div>
                   </div>
                 )}
               </div>
@@ -119,7 +121,7 @@ export default async function ListingPage({ params }: ListingPageProps) {
               {/* Badges */}
               <div className="flex flex-wrap gap-2">
                 <Badge variant="primary">
-                  {categoryConfig.icon} {categoryConfig.label}
+                  {categoryConfig.label}
                 </Badge>
                 <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${conditionConfig.color}`}>
                   {conditionConfig.label}

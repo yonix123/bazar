@@ -106,9 +106,9 @@ export default async function ProfilePage() {
                 {sellListings.map((listing) => {
                   const categoryConfig = CATEGORY_CONFIG[listing.category];
                   const conditionConfig = CONDITION_CONFIG[listing.condition];
-                  
+
                   return (
-                    <div 
+                    <div
                       key={listing.id}
                       className="flex items-start gap-4 p-4 rounded-lg bg-background-elevated border border-border hover:border-border-accent transition-colors"
                     >
@@ -123,8 +123,8 @@ export default async function ProfilePage() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-2xl">
-                            {categoryConfig.icon}
+                          <div className="w-full h-full flex items-center justify-center text-primary-300 bg-primary-500/10">
+                            <div className="w-6 h-6 border-2 border-primary-500 rounded-sm" />
                           </div>
                         )}
                       </div>
@@ -195,7 +195,7 @@ export default async function ProfilePage() {
             ) : (
               <div className="space-y-4">
                 {buyRequests.map((request) => (
-                  <div 
+                  <div
                     key={request.id}
                     className="flex items-start gap-4 p-4 rounded-lg bg-background-elevated border border-border hover:border-border-accent transition-colors"
                   >
