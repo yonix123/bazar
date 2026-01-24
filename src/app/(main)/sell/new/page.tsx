@@ -14,7 +14,7 @@ export default async function SellPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground">Create Sell Listing</h1>
         <p className="text-foreground-muted mt-2">
-          List your robot parts for other FRC teams to purchase
+          List your robot parts for other FTC teams to purchase
         </p>
       </div>
 

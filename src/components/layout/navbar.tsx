@@ -7,8 +7,8 @@ import Image from 'next/image';
 
 <Link href="/" className="flex items-center gap-2">
   <Image
-    src="/bright_red.svg"
-    alt="FRC Bazaar"
+    src=""
+    alt="FTC Bazaar"
     width={40}
     height={40}
     className="w-10 h-10 object-contain"
@@ -27,7 +27,7 @@ import { cn } from '@/lib/utils';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Bazaar', href: '/bazaar' },
+  { name: 'FTC Bazaar', href: '/bazaar' },
 ];
 
 export function Navbar() {
@@ -40,12 +40,15 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative">
+            {/* <div className="relative">
               <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center">
-                <img src="/bright_red.svg" alt="FRC Bazaar" className="w-full h-full object-fit" />
+                <span className="text-lg font-bold text-foreground hidden sm:block">
+                  FTC
+                </span>
               </div>
               <div className="absolute inset-0 bg-primary-500/30 rounded-lg blur-lg -z-10" />
-            </div>
+            </div> */}
+            <img src="https://boltm3.image.firstinspireskz.org/a.svg" alt="FTC" className="w-7 h-7 object-contain" />
             <span className="text-xl font-bold text-foreground hidden sm:block">
               Bazaar
             </span>

@@ -15,11 +15,11 @@ export function Footer() {
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/bright_red.svg"
-                alt="FRC Bazaar"
+                src="https://boltm3.image.firstinspireskz.org/a.svg"
+                alt="FTC Bazaar"
                 width={40}
                 height={40}
-                className="w-10 h-10 object-contain"
+                className="w-7 h-7 object-contain"
               />
               <span className="text-xl font-bold font-heading text-foreground">Bazaar</span>
             </Link>
@@ -57,7 +57,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="https://www.firstinspires.org/robotics/frc"
+                  href="https://www.firstinspires.org/robotics/FTC"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-foreground-muted hover:text-foreground transition-colors"
@@ -92,7 +92,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-foreground-subtle">
-            © {new Date().getFullYear()} FRC Bazaar. Open source project.
+            © {new Date().getFullYear()} FTC Bazaar. Open source project.
           </p>
           <div className="flex items-center gap-4">
             <a
@@ -106,13 +106,13 @@ export function Footer() {
             <span className="flex items-center gap-1.5 text-sm text-foreground-subtle">
               Developed by
               <Image
-                src="/bright_red.svg"
+                src="https://boltm3.image.firstinspireskz.org/a.svg"
                 alt="Team Bolts"
                 width={20}
                 height={20}
                 className="h-5 w-5 object-contain inline-block"
               />
-              for FRC teams
+              for FTC teams
             </span>
           </div>
         </div>

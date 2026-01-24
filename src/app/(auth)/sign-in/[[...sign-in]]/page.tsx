@@ -11,18 +11,18 @@ export default function SignInPage() {
       {/* Logo */}
       <Link href="/" className="relative z-10 flex items-center gap-2 mb-8">
         <div className="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
-          <span className="text-white font-bold text-xl">FRC</span>
+          <span className="text-white font-bold text-xl">FTC</span>
         </div>
         <span className="text-2xl font-bold text-foreground">Bazaar</span>
       </Link>
 
       {/* Sign in component */}
       <div className="relative z-10">
-        <SignIn 
+        <SignIn
           appearance={{
             elements: {
               rootBox: 'mx-auto',
-              card: 'bg-background-card border border-border shadow-2xl shadow-primary-500/10',
+              card: ' border border-border shadow-2xl shadow-primary-500/10',
             },
           }}
         />

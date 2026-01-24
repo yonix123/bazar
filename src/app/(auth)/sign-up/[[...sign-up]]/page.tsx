@@ -11,14 +11,14 @@ export default function SignUpPage() {
       {/* Logo */}
       <Link href="/" className="relative z-10 flex items-center gap-2 mb-8">
         <div className="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
-          <span className="text-white font-bold text-xl">FRC</span>
+          <span className="text-white font-bold text-xl">FTC</span>
         </div>
         <span className="text-2xl font-bold text-foreground">Bazaar</span>
       </Link>
 
       {/* Sign up component */}
       <div className="relative z-10">
-        <SignUp 
+        <SignUp
           appearance={{
             elements: {
               rootBox: 'mx-auto',

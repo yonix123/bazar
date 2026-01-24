@@ -8,7 +8,7 @@ export function Hero() {
       {/* Background effects */}
       <div className="absolute inset-0 bg-grid opacity-50" />
       <div className="absolute inset-0 bg-radial-glow" />
-      
+
       {/* Animated gradient orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-[100px] animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary-600/10 rounded-full blur-[80px] animate-pulse delay-1000" />
@@ -27,14 +27,14 @@ export function Hero() {
 
         {/* Main heading */}
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 animate-slide-up">
-          <span className="text-foreground">The Marketplace for</span>
+          <span className="text-foreground">The Place to Share</span>
           <br />
-          <span className="gradient-text">Robot Parts</span>
+          <span className="gradient-text">FTC Components and Parts</span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg sm:text-xl text-foreground-muted max-w-2xl mx-auto mb-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
-          Buy, sell, and exchange FRC components with teams worldwide. 
+          Buy, sell, and exchange FTC components with teams worldwide.
           Reduce waste, save money, and help level the playing field.
         </p>
 
@@ -53,21 +53,7 @@ export function Hero() {
           </Link>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto animate-fade-in" style={{ animationDelay: '400ms' }}>
-          <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold text-primary-400">100+</div>
-            <div className="text-sm text-foreground-muted">Teams</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold text-primary-400">500+</div>
-            <div className="text-sm text-foreground-muted">Listings</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold text-primary-400">$50K+</div>
-            <div className="text-sm text-foreground-muted">Saved</div>
-          </div>
-        </div>
+
       </div>
 
       {/* Scroll indicator */}

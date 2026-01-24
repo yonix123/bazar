@@ -24,18 +24,18 @@ export function AboutTeam() {
 
             <div className="space-y-4 text-foreground-muted">
               <p>
-                We started this project because we saw firsthand how budget disparities 
-                affect FRC teams. While some teams have access to unlimited resources, 
+                We started this project because we saw firsthand how budget disparities
+                affect FTC teams. While some teams have access to unlimited resources,
                 others struggle to afford even basic components.
               </p>
               <p>
-                FRC Bazaar was born from a simple idea: <strong className="text-foreground">what if teams could 
-                easily share resources?</strong> Parts that sit unused in one team's 
+                FTC Bazaar was born from a simple idea: <strong className="text-foreground">what if teams could
+                  easily share resources?</strong> Parts that sit unused in one team's
                 workshop could be exactly what another team needs to complete their robot.
               </p>
               <p>
-                Our platform is <strong className="text-foreground">100% free</strong> and 
-                always will be. No listing fees, no transaction fees, no premium tiers. 
+                Our platform is <strong className="text-foreground">100% free</strong> and
+                always will be. No listing fees, no transaction fees, no premium tiers.
                 Just teams helping teams.
               </p>
             </div>
@@ -60,7 +60,7 @@ export function AboutTeam() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Our Mission</h3>
                   <p className="text-sm text-foreground-muted">
-                    To reduce inequality in FIRST Robotics by making parts more 
+                    To reduce inequality in FIRST Robotics by making parts more
                     accessible and affordable for all teams, regardless of budget.
                   </p>
                 </div>
@@ -75,7 +75,7 @@ export function AboutTeam() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Built by Teams</h3>
                   <p className="text-sm text-foreground-muted">
-                    Created and maintained by FRC team members who understand the 
+                    Created and maintained by FTC team members who understand the
                     challenges of building competitive robots on a tight budget.
                   </p>
                 </div>
@@ -90,8 +90,8 @@ export function AboutTeam() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Community First</h3>
                   <p className="text-sm text-foreground-muted">
-                    Every feature we build is driven by community feedback. We're 
-                    here to serve the FRC community, not to make a profit.
+                    Every feature we build is driven by community feedback. We're
+                    here to serve the FTC community, not to make a profit.
                   </p>
                 </div>
               </div>

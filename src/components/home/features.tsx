@@ -15,12 +15,12 @@ const features = [
   {
     icon: Globe,
     title: 'Global Network',
-    description: 'Connect with FRC teams worldwide. Find rare parts or sell to teams across the country.',
+    description: 'Connect with FTC teams worldwide. Find rare parts or sell to teams across the country.',
   },
   {
     icon: Shield,
     title: 'Team Verified',
-    description: 'Every seller is a real FRC team member. Trade with confidence in our trusted community.',
+    description: 'Every seller is a real FTC team member. Trade with confidence in our trusted community.',
   },
   {
     icon: Zap,
@@ -41,20 +41,20 @@ export function Features() {
         {/* Section header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Why FRC Teams Love Us
+            Why FTC Teams Love Us
           </h2>
           <p className="text-lg text-foreground-muted max-w-2xl mx-auto">
-            Built by robotics teams, for robotics teams. We understand the unique 
-            challenges of FRC and designed our platform to solve them.
+            Built by robotics teams, for robotics teams. We understand the unique
+            challenges of FTC and designed our platform to solve them.
           </p>
         </div>
 
         {/* Features grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
-            <Card 
-              key={feature.title} 
-              hoverable 
+            <Card
+              key={feature.title}
+              hoverable
               className="bg-background-card/50 backdrop-blur-sm"
             >
               <CardContent className="p-6">
