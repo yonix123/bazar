@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { Upload, X, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select } from '@/components/ui/select';
@@ -14,21 +15,7 @@ import { CATEGORIES, CONDITIONS, CONTACT_CONFIG } from '@/lib/utils';
 import { getClient } from '@/lib/supabase/client';
 import { generateImageFilename, isValidImageType, isValidImageSize } from '@/lib/utils';
 import type { CreateSellListingInput, ListingCategory, ItemCondition, ContactType } from '@/types/database';
-
-const CATEGORY_OPTIONS = CATEGORIES.map(c => ({
-  value: c.value,
-  label: `${c.icon} ${c.label}`
-}));
-
-const CONDITION_OPTIONS = CONDITIONS.map(c => ({
-  value: c.value,
-  label: c.label
-}));
-
-const CONTACT_OPTIONS = Object.entries(CONTACT_CONFIG).map(([value, config]) => ({
-  value,
-  label: `${config.icon} ${config.label}`,
-}));
+import { type Currency, EXCHANGE_RATES } from '@/context/currency-context';
 
 interface SellFormProps {
   initialData?: CreateSellListingInput & { id: string };
@@ -36,12 +23,18 @@ interface SellFormProps {
 }
 
 export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
+  const t = useTranslations('Forms.Sell');
+  const tVal = useTranslations('Forms.Validation');
+  const tCats = useTranslations('Categories');
+  const tConds = useTranslations('Conditions');
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
   const [images, setImages] = useState<string[]>(initialData?.images || []);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>('KZT');
   const [formData, setFormData] = useState<CreateSellListingInput>({
     title: initialData?.title || '',
     description: initialData?.description || '',
@@ -54,8 +47,23 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
     images: initialData?.images || [],
   });
 
+  const categoryOptions = CATEGORIES.map(c => ({
+    value: c.value,
+    label: `${c.icon} ${tCats(c.value)}`
+  }));
+
+  const conditionOptions = CONDITIONS.map(c => ({
+    value: c.value,
+    label: tConds(c.value)
+  }));
+
+  const contactOptions = Object.entries(CONTACT_CONFIG).map(([value, config]) => ({
+    value,
+    label: `${config.icon} ${config.label}`,
+  }));
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { target: { name: string; value: any } }
   ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -143,31 +151,31 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
     const newErrors: Record<string, string> = {};
 
     if (!formData.title.trim()) {
-      newErrors.title = 'Title is required';
+      newErrors.title = tVal('required');
     } else if (formData.title.length < 5) {
-      newErrors.title = 'Title must be at least 5 characters';
+      newErrors.title = tVal('tooShort');
     }
 
     if (!formData.description.trim()) {
-      newErrors.description = 'Description is required';
+      newErrors.description = tVal('required');
     } else if (formData.description.length < 20) {
-      newErrors.description = 'Description must be at least 20 characters';
+      newErrors.description = tVal('tooShort');
     }
 
-    if (formData.price <= 0) {
-      newErrors.price = 'Price must be greater than 0';
+    if (formData.price < 0) {
+      newErrors.price = tVal('nonNegative');
     }
 
     if (!formData.location.trim()) {
-      newErrors.location = 'Location is required';
+      newErrors.location = tVal('required');
     }
 
     if (!formData.contact_value.trim()) {
-      newErrors.contact_value = 'Contact information is required';
+      newErrors.contact_value = tVal('required');
     }
 
     if (images.length === 0) {
-      newErrors.images = 'At least one image is required';
+      newErrors.images = tVal('required');
     }
 
     setErrors(newErrors);
@@ -185,11 +193,16 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
     setLoading(true);
 
     try {
+      // Convert price to KZT
+      const rate = EXCHANGE_RATES[selectedCurrency];
+      const priceInKzt = formData.price / rate;
+
       if (isEditMode && initialData?.id) {
         // Update Logic - using updateSellListing action
         const { updateSellListing } = await import('@/lib/actions/listings');
         const { data, error } = await updateSellListing(initialData.id, {
           ...formData,
+          price: priceInKzt,
           images,
         });
 
@@ -197,7 +210,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
           toast.error(error);
           return;
         }
-        toast.success('Listing updated successfully!');
+        toast.success(t('update') + ' success!');
         router.push(`/listing/${initialData.id}`); // Redirect back to listing
         router.refresh();
 
@@ -205,6 +218,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
         // Create Logic
         const { data, error } = await createSellListing({
           ...formData,
+          price: priceInKzt,
           images,
         });
 
@@ -213,13 +227,13 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
           return;
         }
 
-        toast.success('Listing created successfully!');
+        toast.success(t('submit') + ' success!');
         router.push(`/listing/${data?.id}`);
       }
 
     } catch (error) {
       console.error('Submit error:', error);
-      toast.error(isEditMode ? 'Failed to update listing' : 'Failed to create listing');
+      toast.error(isEditMode ? 'Failed to update' : 'Failed to create');
     } finally {
       setLoading(false);
     }
@@ -229,25 +243,25 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>{isEditMode ? 'Edit Item Details' : 'Item Details'}</CardTitle>
+          <CardTitle>{isEditMode ? t('editTitle') : t('detailsTitle')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <Input
-            label="Title"
+            label={t('fields.title')}
             name="title"
             value={formData.title}
             onChange={handleChange}
-            placeholder="e.g., NEO Brushless Motor (Slightly Used)"
+            placeholder={t('fields.titlePlaceholder')}
             error={!!errors.title}
             helperText={errors.title}
           />
 
           <Textarea
-            label="Description"
+            label={t('fields.description')}
             name="description"
             value={formData.description}
             onChange={handleChange}
-            placeholder="Describe the item, its condition, any defects, included accessories, etc."
+            placeholder={t('fields.descriptionPlaceholder')}
             rows={5}
             error={!!errors.description}
             helperText={errors.description}
@@ -255,40 +269,57 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Select
-              label="Category"
+              label={t('fields.category')}
               name="category"
               value={formData.category}
-              onChange={handleChange}
-              options={CATEGORY_OPTIONS}
+              onValueChange={(value) => handleChange({ target: { name: 'category', value } })}
+              options={categoryOptions}
             />
 
             <Select
-              label="Condition"
+              label={t('fields.condition')}
               name="condition"
               value={formData.condition}
-              onChange={handleChange}
-              options={CONDITION_OPTIONS}
+              onValueChange={(value) => handleChange({ target: { name: 'condition', value } })}
+              options={conditionOptions}
             />
           </div>
 
-          <Input
-            label="Price (USD)"
-            name="price"
-            type="number"
-            min="0"
-            step="0.01"
-            value={formData.price || ''}
-            onChange={handleChange}
-            placeholder="0.00"
-            error={!!errors.price}
-            helperText={errors.price}
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="col-span-1">
+              <Input
+                label={t('fields.price')}
+                name="price"
+                type="number"
+                min="0"
+                step="0.01"
+                value={formData.price || ''}
+                onChange={handleChange}
+                placeholder="0.00"
+                error={!!errors.price}
+                helperText={errors.price}
+              />
+            </div>
+            <div className="col-span-1">
+              <Select
+                label={t('fields.currency')}
+                value={selectedCurrency}
+                onValueChange={(value) => setSelectedCurrency(value as Currency)}
+                options={[
+                  { value: 'KZT', label: 'KZT (₸)' },
+                  { value: 'USD', label: 'USD ($)' },
+                  { value: 'KGS', label: 'KGS (с)' },
+                  { value: 'UZS', label: 'UZS (сум)' },
+                ]}
+              />
+            </div>
+          </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Images</CardTitle>
+          <CardTitle>{t('images.title')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -311,7 +342,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
                     </button>
                     {index === 0 && (
                       <span className="absolute bottom-2 left-2 px-2 py-0.5 bg-primary-500 text-white text-xs rounded">
-                        Main
+                        {t('images.main')}
                       </span>
                     )}
                   </div>
@@ -334,7 +365,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
                     <Upload className="w-8 h-8 text-foreground-muted mb-2" />
                   )}
                   <p className="mb-1 text-sm text-foreground-muted">
-                    <span className="font-semibold text-primary-400">Click to upload</span> or drag and drop
+                    <span className="font-semibold text-primary-400">{t('images.uploadText')}</span> {t('images.dragText')}
                   </p>
                   <p className="text-xs text-foreground-subtle">
                     PNG, JPG, WebP (max 5MB each, {5 - images.length} remaining)
@@ -364,22 +395,22 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           <Input
-            label="Location"
+            label={t('fields.location')}
             name="location"
             value={formData.location}
             onChange={handleChange}
-            placeholder="e.g., San Francisco, CA"
+            placeholder={t('fields.locationPlaceholder')}
             error={!!errors.location}
             helperText={errors.location}
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Select
-              label="Contact Method"
+              label={t('fields.contactType')}
               name="contact_type"
               value={formData.contact_type}
-              onChange={handleChange}
-              options={CONTACT_OPTIONS}
+              onValueChange={(value) => handleChange({ target: { name: 'contact_type', value } })}
+              options={contactOptions}
             />
 
             <Input
@@ -402,7 +433,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
           onClick={() => router.back()}
           disabled={loading}
         >
-          Cancel
+          {t('cancel')}
         </Button>
         <Button
           type="submit"
@@ -410,7 +441,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
           loading={loading}
           disabled={loading || uploadingImages}
         >
-          {isEditMode ? 'Update Listing' : 'Create Listing'}
+          {isEditMode ? t('update') : t('submit')}
         </Button>
       </div>
     </form>

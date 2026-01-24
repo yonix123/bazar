@@ -8,34 +8,38 @@ import { Select } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { CATEGORIES, CONDITIONS } from '@/lib/utils';
 import { debounce } from '@/lib/utils';
-
-const TYPE_OPTIONS = [
-  { value: 'all', label: 'All Types' },
-  { value: 'sell', label: 'For Sale' },
-  { value: 'buy', label: 'Wanted' },
-];
-
-const CATEGORY_OPTIONS = [
-  { value: 'all', label: 'All Categories' },
-  ...CATEGORIES.map(c => ({ value: c.value, label: `${c.icon} ${c.label}` })),
-];
-
-const CONDITION_OPTIONS = [
-  { value: 'all', label: 'Any Condition' },
-  ...CONDITIONS.map(c => ({ value: c.value, label: c.label })),
-];
-
-const SORT_OPTIONS = [
-  { value: 'newest', label: 'Newest First' },
-  { value: 'price_asc', label: 'Price: Low to High' },
-  { value: 'price_desc', label: 'Price: High to Low' },
-];
+import { useTranslations } from 'next-intl';
 
 export function ListingFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const t = useTranslations('Filters');
+  const tCategories = useTranslations('Categories');
+  const tConditions = useTranslations('Conditions');
+
+  const TYPE_OPTIONS = [
+    { value: 'all', label: t('allTypes') },
+    { value: 'sell', label: t('forSale') },
+    { value: 'buy', label: t('wanted') },
+  ];
+
+  const CATEGORY_OPTIONS = [
+    { value: 'all', label: t('allCategories') },
+    ...CATEGORIES.map(c => ({ value: c.value, label: `${c.icon} ${tCategories(c.value as any)}` })),
+  ];
+
+  const CONDITION_OPTIONS = [
+    { value: 'all', label: t('anyCondition') },
+    ...CONDITIONS.map(c => ({ value: c.value, label: tConditions(c.value as any) })),
+  ];
+
+  const SORT_OPTIONS = [
+    { value: 'newest', label: t('newest') },
+    { value: 'price_asc', label: t('priceLowHigh') },
+    { value: 'price_desc', label: t('priceHighLow') },
+  ];
 
   // Get current values from URL
   const currentSearch = searchParams.get('search') || '';
@@ -64,7 +68,7 @@ export function ListingFilters() {
     params.delete('page');
 
     startTransition(() => {
-      router.replace(`/bazaar?${params.toString()}`);
+      router.replace(`?${params.toString()}`);
     });
   }, [router, searchParams]);
 
@@ -84,7 +88,8 @@ export function ListingFilters() {
 
   const clearFilters = () => {
     setSearch('');
-    router.push('/bazaar');
+    // Remove query params but keep pathname
+    router.push('?');
   };
 
   const hasActiveFilters = currentSearch || currentType !== 'all' ||
@@ -99,7 +104,7 @@ export function ListingFilters() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground-subtle" />
           <Input
             type="text"
-            placeholder="Search listings..."
+            placeholder={t('search')}
             value={search}
             onChange={handleSearchChange}
             className="pl-10"
@@ -119,34 +124,34 @@ export function ListingFilters() {
         <Select
           options={TYPE_OPTIONS}
           value={currentType}
-          onChange={(e) => updateFilters({ type: e.target.value })}
+          onValueChange={(value) => updateFilters({ type: value })}
         />
         <Select
           options={CATEGORY_OPTIONS}
           value={currentCategory}
-          onChange={(e) => updateFilters({ category: e.target.value })}
+          onValueChange={(value) => updateFilters({ category: value })}
         />
         <Select
           options={CONDITION_OPTIONS}
           value={currentCondition}
-          onChange={(e) => updateFilters({ condition: e.target.value })}
+          onValueChange={(value) => updateFilters({ condition: value })}
         />
         <Select
           options={SORT_OPTIONS}
           value={currentSort}
-          onChange={(e) => updateFilters({ sort: e.target.value })}
+          onValueChange={(value) => updateFilters({ sort: value })}
         />
         <div className="flex gap-2">
           <Input
             type="number"
-            placeholder="Min $"
+            placeholder={t('minPrice')}
             value={currentMinPrice}
             onChange={(e) => updateFilters({ minPrice: e.target.value })}
             className="w-full"
           />
           <Input
             type="number"
-            placeholder="Max $"
+            placeholder={t('maxPrice')}
             value={currentMaxPrice}
             onChange={(e) => updateFilters({ maxPrice: e.target.value })}
             className="w-full"
@@ -157,10 +162,10 @@ export function ListingFilters() {
       {/* Active filters summary */}
       {hasActiveFilters && (
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-foreground-subtle">Active filters:</span>
+          <span className="text-sm text-foreground-subtle">{t('activeFilters')}</span>
           {currentSearch && (
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-background-elevated border border-border">
-              Search: "{currentSearch}"
+              "{currentSearch}"
             </span>
           )}
           {currentType !== 'all' && (
@@ -185,7 +190,7 @@ export function ListingFilters() {
             className="text-xs text-primary-400 hover:text-primary-300"
           >
             <X className="h-3 w-3 mr-1" />
-            Clear all
+            {t('clearAll')}
           </Button>
         </div>
       )}

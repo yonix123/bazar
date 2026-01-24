@@ -1,0 +1,133 @@
+{
+    "Navbar": {
+        "home": "Главная",
+        "bazaar": "Базар",
+        "signIn": "Войти",
+        "getStarted": "Начать",
+        "sell": "Продать",
+        "buy": "Купить",
+        "profile": "Профиль"
+    },
+    "Footer": {
+        "brand": "Базар",
+        "description": "Торговая площадка для команд FIRST Robotics. Покупайте, продавайте и обменивайтесь деталями роботов. Снижаем неравенство в робототехнике, деталь за деталью.",
+        "quickLinks": "Быстрые ссылки",
+        "browseListings": "Смотреть объявления",
+        "sellParts": "Продать детали",
+        "postBuyRequest": "Запрос на покупку",
+        "resources": "Ресурсы",
+        "copyright": "© {year} FTC Bazaar. Проект с открытым кодом.",
+        "developedBy": "Разработано",
+        "forTeams": "для команд FTC"
+    },
+    "Hero": {
+        "badge": "Для команд FIRST Robotics",
+        "title1": "Место для обмена",
+        "title2": "Компонентами и деталями для FTC",
+        "subtitle": "Покупайте, продавайте и обменивайтесь компонентами FTC с командами по всему миру. Сократите отходы, сэкономьте деньги и уравняйте шансы.",
+        "browse": "Смотреть объявления",
+        "startSelling": "Начать продавать"
+    },
+    "Bazaar": {
+        "title": "Базар",
+        "subtitle": "Найдите детали для покупки или узнайте, что ищут другие команды",
+        "sell": "Продать",
+        "buy": "Купить",
+        "showingResults": "Показано {count} {count, plural, one {результат} few {результата} other {результатов}}",
+        "noListings": "Объявлений не найдено",
+        "noListingsDesc": "Попробуйте изменить фильтры или станьте первым, кто создаст объявление!",
+        "sellSomething": "Продать что-нибудь",
+        "postBuyRequest": "Разместить запрос на покупку",
+        "previous": "Назад",
+        "next": "Вперед",
+        "page": "Страница {current} из {total}"
+    },
+    "Filters": {
+        "search": "Поиск объявлений...",
+        "allTypes": "Все типы",
+        "forSale": "Продажа",
+        "wanted": "Покупка",
+        "allCategories": "Все категории",
+        "anyCondition": "Любое состояние",
+        "newest": "Сначала новые",
+        "priceLowHigh": "Цена: по возрастанию",
+        "priceHighLow": "Цена: по убыванию",
+        "minPrice": "Мин",
+        "maxPrice": "Макс",
+        "activeFilters": "Активные фильтры:",
+        "clearAll": "Очистить все"
+    },
+    "Listing": {
+        "forSale": "ПРОДАЖА",
+        "wanted": "ИЩУ",
+        "lookingFor": "Ищу: {item}",
+        "budget": "Бюджет до:"
+    },
+    "Categories": {
+        "electronics": "Электроника",
+        "motors": "Моторы",
+        "sensors": "Сенсоры",
+        "structural": "Конструктив",
+        "wheels": "Колеса",
+        "tools": "Инструменты",
+        "other": "Другое"
+    },
+    "Conditions": {
+        "new": "Новое",
+        "like_new": "Как новое",
+        "good": "Хорошее",
+        "fair": "Среднее",
+        "for_parts": "На запчасти",
+        "used": "Б/У",
+        "repaired": "Отремонтированное"
+    },
+    "Forms": {
+        "Sell": {
+            "title": "Создать объявление о продаже",
+            "subtitle": "Разместите детали робота для покупки другими командами FTC",
+            "editTitle": "Редактировать детали",
+            "detailsTitle": "Детали товара",
+            "fields": {
+                "title": "Название",
+                "titlePlaceholder": "напр., NEO Brushless Motor (Немного б/у)",
+                "description": "Описание",
+                "descriptionPlaceholder": "Опишите товар, его состояние, дефекты, комплектацию и т.д.",
+                "category": "Категория",
+                "condition": "Состояние",
+                "price": "Цена",
+                "currency": "Валюта",
+                "location": "Местоположение",
+                "locationPlaceholder": "напр., Алматы, Казахстан",
+                "contactType": "Способ связи",
+                "contactValue": "Контакт",
+                "contactValuePlaceholder": "@username или номер телефона"
+            },
+            "images": {
+                "title": "Изображения",
+                "uploadText": "Нажмите для загрузки",
+                "dragText": "или перетащите сюда",
+                "main": "Главное"
+            },
+            "submit": "Создать объявление",
+            "update": "Обновить объявление",
+            "cancel": "Отмена"
+        },
+        "Buy": {
+            "title": "Создать запрос на покупку",
+            "subtitle": "Сообщите другим командам, что вы ищете",
+            "detailsTitle": "Что вы ищете?",
+            "fields": {
+                "itemNeeded": "Описание товара",
+                "itemNeededPlaceholder": "Опишите необходимые детали...",
+                "budget": "Максимальный бюджет"
+            },
+            "submit": "Разместить запрос"
+        },
+        "Validation": {
+            "required": "Обязательно",
+            "tooShort": "Слишком короткое",
+            "positive": "Должно быть положительным",
+            "nonNegative": "Не может быть отрицательным"
+        }
+    }
+}

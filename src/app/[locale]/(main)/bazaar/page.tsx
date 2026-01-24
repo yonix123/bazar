@@ -8,12 +8,14 @@ import { SkeletonListingGrid } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { getSellListings, getBuyRequests } from '@/lib/actions/listings';
 import type { BazaarFilters, SellListing, BuyRequest } from '@/types/database';
+import { getTranslations } from 'next-intl/server';
 
 interface BazaarPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 async function ListingsGrid({ searchParams }: { searchParams: Record<string, string | undefined> }) {
+  const t = await getTranslations('Bazaar');
   const type = searchParams.type || 'all';
   const page = parseInt(searchParams.page || '1');
 
@@ -44,21 +46,21 @@ async function ListingsGrid({ searchParams }: { searchParams: Record<string, str
     return (
       <div className="text-center py-16">
         <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-xl font-semibold text-foreground mb-2">No listings found</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-2">{t('noListings')}</h3>
         <p className="text-foreground-muted mb-6">
-          Try adjusting your filters or be the first to create a listing!
+          {t('noListingsDesc')}
         </p>
         <div className="flex justify-center gap-4">
           <Link href="/sell/new">
             <Button variant="primary" className="gap-2">
               <Plus className="h-4 w-4" />
-              Sell Something
+              {t('sellSomething')}
             </Button>
           </Link>
           <Link href="/buy/new">
             <Button variant="secondary" className="gap-2">
               <ShoppingBag className="h-4 w-4" />
-              Post Buy Request
+              {t('postBuyRequest')}
             </Button>
           </Link>
         </div>
@@ -83,7 +85,7 @@ async function ListingsGrid({ searchParams }: { searchParams: Record<string, str
       {/* Results count */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-foreground-muted">
-          Showing {totalItems} {totalItems === 1 ? 'result' : 'results'}
+          {t('showingResults', { count: totalItems })}
         </p>
       </div>
 
@@ -107,19 +109,19 @@ async function ListingsGrid({ searchParams }: { searchParams: Record<string, str
             <Link href={buildPageUrl(page - 1)}>
               <Button variant="secondary" size="sm" className="gap-1">
                 <ChevronLeft className="h-4 w-4" />
-                Previous
+                {t('previous')}
               </Button>
             </Link>
           )}
 
           <span className="px-4 py-2 text-sm text-foreground-muted">
-            Page {page} of {maxPages}
+            {t('page', { current: page, total: maxPages })}
           </span>
 
           {page < maxPages && (
             <Link href={buildPageUrl(page + 1)}>
               <Button variant="secondary" size="sm" className="gap-1">
-                Next
+                {t('next')}
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </Link>
@@ -131,6 +133,7 @@ async function ListingsGrid({ searchParams }: { searchParams: Record<string, str
 }
 
 export default async function BazaarPage({ searchParams }: BazaarPageProps) {
+  const t = await getTranslations('Bazaar');
   const resolvedParams = await searchParams;
   const params: Record<string, string | undefined> = {};
   Object.entries(resolvedParams).forEach(([key, value]) => {
@@ -143,22 +146,22 @@ export default async function BazaarPage({ searchParams }: BazaarPageProps) {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Bazaar</h1>
+          <h1 className="text-3xl font-bold text-foreground">{t('title')}</h1>
           <p className="text-foreground-muted mt-1">
-            Find parts to buy or see what teams are looking for
+            {t('subtitle')}
           </p>
         </div>
         <div className="flex gap-3">
           <Link href="/sell/new">
             <Button variant="primary" className="gap-2">
               <Plus className="h-4 w-4" />
-              Sell
+              {t('sell')}
             </Button>
           </Link>
           <Link href="/buy/new">
             <Button variant="secondary" className="gap-2">
               <ShoppingBag className="h-4 w-4" />
-              Buy
+              {t('buy')}
             </Button>
           </Link>
         </div>

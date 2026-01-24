@@ -1,0 +1,133 @@
+{
+    "Navbar": {
+        "home": "Басты бет",
+        "bazaar": "Базар",
+        "signIn": "Кіру",
+        "getStarted": "Бастау",
+        "sell": "Сату",
+        "buy": "Сатып алу",
+        "profile": "Профиль"
+    },
+    "Footer": {
+        "brand": "Базар",
+        "description": "FIRST Robotics командаларына арналған сауда алаңы. Робот бөлшектерін сатып алыңыз, сатыңыз және айырбастаңыз. Робототехникадағы теңсіздікті азайту.",
+        "quickLinks": "Жылдам сілтемелер",
+        "browseListings": "Хабарландырулар",
+        "sellParts": "Бөлшектерді сату",
+        "postBuyRequest": "Сатып алу сұранысы",
+        "resources": "Ресурстар",
+        "copyright": "© {year} FTC Bazaar. Ашық бастапқы жоба.",
+        "developedBy": "Әзірлеген",
+        "forTeams": "FTC командалары үшін"
+    },
+    "Hero": {
+        "badge": "FIRST Robotics командалары үшін",
+        "title1": "Алмасу орны",
+        "title2": "FTC компоненттері мен бөлшектері",
+        "subtitle": "Бүкіл әлем бойынша командалармен FTC компоненттерін сатып алыңыз, сатыңыз және алмасыңыз.",
+        "browse": "Хабарландыруларды қарау",
+        "startSelling": "Сатуды бастау"
+    },
+    "Bazaar": {
+        "title": "Базар",
+        "subtitle": "Сатып алуға қажетті бөлшектерді табыңыз немесе басқа командалар не іздеп жүргенін көріңіз",
+        "sell": "Сату",
+        "buy": "Сатып алу",
+        "showingResults": "{count} нәтиже көрсетілді",
+        "noListings": "Хабарландырулар табылмады",
+        "noListingsDesc": "Сүзгілерді өзгертіп көріңіз немесе бірінші болып хабарландыру жасаңыз!",
+        "sellSomething": "Бірдеңе сату",
+        "postBuyRequest": "Сатып алуға сұраныс беру",
+        "previous": "Алға",
+        "next": "Келесі",
+        "page": "{total} беттің {current}-і"
+    },
+    "Filters": {
+        "search": "Хабарландыруларды іздеу...",
+        "allTypes": "Барлық түрлері",
+        "forSale": "Сатылымда",
+        "wanted": "Іздеуде",
+        "allCategories": "Барлық санаттар",
+        "anyCondition": "Кез келген жағдай",
+        "newest": "Ең жаңалары",
+        "priceLowHigh": "Баға: Төменнен жоғарыға",
+        "priceHighLow": "Баға: Жоғарыдан төменге",
+        "minPrice": "Мин",
+        "maxPrice": "Макс",
+        "activeFilters": "Белсенді сүзгілер:",
+        "clearAll": "Барлығын тазалау"
+    },
+    "Listing": {
+        "forSale": "САТЫЛЫМ",
+        "wanted": "ІЗДЕУ",
+        "lookingFor": "Ізделінуде: {item}",
+        "budget": "Бюджет:"
+    },
+    "Categories": {
+        "electronics": "Электроника",
+        "motors": "Моторлар",
+        "sensors": "Сенсорлар",
+        "structural": "Құрылымдық",
+        "wheels": "Дөңгелектер",
+        "tools": "Құралдар",
+        "other": "Басқа"
+    },
+    "Conditions": {
+        "new": "Жаңа",
+        "like_new": "Жаңа сияқты",
+        "good": "Жақсы",
+        "fair": "Орташа",
+        "for_parts": "Бөлшектерге арналған",
+        "used": "Қолданылған",
+        "repaired": "Жөнделген"
+    },
+    "Forms": {
+        "Sell": {
+            "title": "Сату хабарландыруын құру",
+            "subtitle": "FTC командаларына арналған робот бөлшектерін орналастырыңыз",
+            "editTitle": "Бөлшектерді өзгерту",
+            "detailsTitle": "Товар туралы мәлімет",
+            "fields": {
+                "title": "Атауы",
+                "titlePlaceholder": "мысалы, NEO Brushless Motor",
+                "description": "Сипаттама",
+                "descriptionPlaceholder": "Товарды, оның жағдайын, кемшіліктерін сипаттаңыз...",
+                "category": "Санат",
+                "condition": "Жағдайы",
+                "price": "Бағасы",
+                "currency": "Валюта",
+                "location": "Орналасқан жері",
+                "locationPlaceholder": "мысалы, Алматы, Қазақстан",
+                "contactType": "Байланыс әдісі",
+                "contactValue": "Байланыс",
+                "contactValuePlaceholder": "@username немесе телефон нөмірі"
+            },
+            "images": {
+                "title": "Суреттер",
+                "uploadText": "Жүктеу үшін басыңыз",
+                "dragText": "немесе осында сүйреңіз",
+                "main": "Негізгі"
+            },
+            "submit": "Хабарландыру құру",
+            "update": "Жаңарту",
+            "cancel": "Болдырмау"
+        },
+        "Buy": {
+            "title": "Сатып алу өтінішін құру",
+            "subtitle": "Басқа командаларға не іздеп жатқаныңызды хабарлаңыз",
+            "detailsTitle": "Не іздеп жүрсіз?",
+            "fields": {
+                "itemNeeded": "Тауар сипаттамасы",
+                "itemNeededPlaceholder": "Қажетті бөлшектерді сипаттаңыз...",
+                "budget": "Максималды бюджет"
+            },
+            "submit": "Өтініш беру"
+        },
+        "Validation": {
+            "required": "Міндетті",
+            "tooShort": "Тым қысқа",
+            "positive": "Оң болуы керек",
+            "nonNegative": "Теріс бола алмайды"
+        }
+    }
+}

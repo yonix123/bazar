@@ -1,16 +1,19 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Clock } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  formatPrice, 
-  formatRelativeDate, 
+import {
+  formatRelativeDate,
   truncate,
   CATEGORY_CONFIG,
-  CONDITION_CONFIG 
+  CONDITION_CONFIG
 } from '@/lib/utils';
 import type { SellListing, BuyRequest } from '@/types/database';
+import { useTranslations } from 'next-intl';
+import { useCurrency } from '@/context/currency-context';
 
 interface SellListingCardProps {
   listing: SellListing;
@@ -19,6 +22,10 @@ interface SellListingCardProps {
 export function SellListingCard({ listing }: SellListingCardProps) {
   const categoryConfig = CATEGORY_CONFIG[listing.category];
   const conditionConfig = CONDITION_CONFIG[listing.condition];
+  const t = useTranslations('Listing');
+  const tCategories = useTranslations('Categories');
+  const tConditions = useTranslations('Conditions');
+  const { formatPrice } = useCurrency();
 
   return (
     <Link href={`/listing/${listing.id}`}>
@@ -38,18 +45,18 @@ export function SellListingCard({ listing }: SellListingCardProps) {
               <span className="text-4xl">{categoryConfig.icon}</span>
             </div>
           )}
-          
+
           {/* Badges overlay */}
           <div className="absolute top-3 left-3 flex flex-wrap gap-2">
             <Badge variant="primary" className="backdrop-blur-sm bg-primary-500/80">
-              {categoryConfig.icon} {categoryConfig.label}
+              {categoryConfig.icon} {tCategories(listing.category as any)}
             </Badge>
           </div>
-          
+
           {/* Condition badge */}
           <div className="absolute top-3 right-3">
             <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border backdrop-blur-sm ${conditionConfig.color}`}>
-              {conditionConfig.label}
+              {tConditions(listing.condition as any)}
             </span>
           </div>
         </div>
@@ -59,7 +66,7 @@ export function SellListingCard({ listing }: SellListingCardProps) {
           <h3 className="font-semibold text-foreground line-clamp-2 mb-2">
             {listing.title}
           </h3>
-          
+
           <p className="text-sm text-foreground-muted line-clamp-2 mb-3 flex-1">
             {truncate(listing.description, 100)}
           </p>
@@ -82,7 +89,7 @@ export function SellListingCard({ listing }: SellListingCardProps) {
               {formatPrice(listing.price)}
             </span>
             <Badge variant="secondary" className="text-xs">
-              FOR SALE
+              {t('forSale')}
             </Badge>
           </div>
         </div>
@@ -96,6 +103,9 @@ interface BuyRequestCardProps {
 }
 
 export function BuyRequestCard({ request }: BuyRequestCardProps) {
+  const t = useTranslations('Listing');
+  const { formatPrice } = useCurrency();
+
   return (
     <Link href={`/buy/${request.id}`}>
       <Card hoverable className="h-full flex flex-col">
@@ -104,7 +114,7 @@ export function BuyRequestCard({ request }: BuyRequestCardProps) {
           <div className="text-center px-4">
             <span className="text-5xl mb-2 block">🔍</span>
             <Badge variant="warning" className="backdrop-blur-sm">
-              WANTED
+              {t('wanted')}
             </Badge>
           </div>
         </div>
@@ -112,7 +122,7 @@ export function BuyRequestCard({ request }: BuyRequestCardProps) {
         {/* Content */}
         <div className="flex-1 p-4 flex flex-col">
           <h3 className="font-semibold text-foreground line-clamp-2 mb-2">
-            Looking for: {request.item_needed}
+            {t('lookingFor', { item: request.item_needed })}
           </h3>
 
           {/* Meta info */}
@@ -130,7 +140,7 @@ export function BuyRequestCard({ request }: BuyRequestCardProps) {
           {/* Budget */}
           <div className="flex items-center justify-between pt-3 border-t border-border">
             <span className="text-sm text-foreground-muted">
-              Budget up to:
+              {t('budget')}
             </span>
             <span className="text-lg font-bold text-yellow-400">
               {formatPrice(request.max_budget)}

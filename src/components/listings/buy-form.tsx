@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select } from '@/components/ui/select';
@@ -11,17 +12,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createBuyRequest } from '@/lib/actions/listings';
 import { CONTACT_CONFIG } from '@/lib/utils';
 import type { CreateBuyRequestInput } from '@/types/database';
-
-const CONTACT_OPTIONS = Object.entries(CONTACT_CONFIG).map(([value, config]) => ({
-  value,
-  label: `${config.icon} ${config.label}`,
-}));
+import { type Currency, EXCHANGE_RATES } from '@/context/currency-context';
 
 export function BuyForm() {
+  const t = useTranslations('Forms.Buy');
+  const tVal = useTranslations('Forms.Validation');
+  const tSell = useTranslations('Forms.Sell'); // Reuse common fields like location/contact
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>('KZT');
   const [formData, setFormData] = useState<CreateBuyRequestInput>({
     item_needed: '',
     max_budget: 0,
@@ -30,8 +32,13 @@ export function BuyForm() {
     contact_value: '',
   });
 
+  const contactOptions = Object.entries(CONTACT_CONFIG).map(([value, config]) => ({
+    value,
+    label: `${config.icon} ${config.label}`,
+  }));
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { target: { name: string; value: any } }
   ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -48,21 +55,21 @@ export function BuyForm() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.item_needed.trim()) {
-      newErrors.item_needed = 'Please describe what you need';
+      newErrors.item_needed = tVal('required');
     } else if (formData.item_needed.length < 10) {
-      newErrors.item_needed = 'Please provide more detail (at least 10 characters)';
+      newErrors.item_needed = tVal('tooShort');
     }
 
-    if (formData.max_budget <= 0) {
-      newErrors.max_budget = 'Budget must be greater than 0';
+    if (formData.max_budget < 0) {
+      newErrors.max_budget = tVal('nonNegative');
     }
 
     if (!formData.location.trim()) {
-      newErrors.location = 'Location is required';
+      newErrors.location = tVal('required');
     }
 
     if (!formData.contact_value.trim()) {
-      newErrors.contact_value = 'Contact information is required';
+      newErrors.contact_value = tVal('required');
     }
 
     setErrors(newErrors);
@@ -80,14 +87,21 @@ export function BuyForm() {
     setLoading(true);
 
     try {
-      const { data, error } = await createBuyRequest(formData);
+      // Convert budget to KZT
+      const rate = EXCHANGE_RATES[selectedCurrency];
+      const budgetInKzt = formData.max_budget / rate;
+
+      const { data, error } = await createBuyRequest({
+        ...formData,
+        max_budget: budgetInKzt,
+      });
 
       if (error) {
         toast.error(error);
         return;
       }
 
-      toast.success('Buy request posted successfully!');
+      toast.success(t('submit') + ' success!');
       router.push('/bazaar?type=buy');
     } catch (error) {
       console.error('Submit error:', error);
@@ -101,32 +115,49 @@ export function BuyForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>What are you looking for?</CardTitle>
+          <CardTitle>{t('detailsTitle')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <Textarea
-            label="Item Description"
+            label={t('fields.itemNeeded')}
             name="item_needed"
             value={formData.item_needed}
             onChange={handleChange}
-            placeholder="Describe the item(s) you need, including any specific requirements like brand, model, condition, etc."
+            placeholder={t('fields.itemNeededPlaceholder')}
             rows={4}
             error={!!errors.item_needed}
             helperText={errors.item_needed || 'Be specific to get better responses'}
           />
 
-          <Input
-            label="Maximum Budget (USD)"
-            name="max_budget"
-            type="number"
-            min="0"
-            step="0.01"
-            value={formData.max_budget || ''}
-            onChange={handleChange}
-            placeholder="0.00"
-            error={!!errors.max_budget}
-            helperText={errors.max_budget || 'The maximum you\'re willing to pay'}
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="col-span-1">
+              <Input
+                label={t('fields.budget')}
+                name="max_budget"
+                type="number"
+                min="0"
+                step="0.01"
+                value={formData.max_budget || ''}
+                onChange={handleChange}
+                placeholder="0.00"
+                error={!!errors.max_budget}
+                helperText={errors.max_budget || 'The maximum you\'re willing to pay'}
+              />
+            </div>
+            <div className="col-span-1">
+              <Select
+                label={tSell('fields.currency')}
+                value={selectedCurrency}
+                onValueChange={(value) => setSelectedCurrency(value as Currency)}
+                options={[
+                  { value: 'KZT', label: 'KZT (₸)' },
+                  { value: 'USD', label: 'USD ($)' },
+                  { value: 'KGS', label: 'KGS (с)' },
+                  { value: 'UZS', label: 'UZS (сум)' },
+                ]}
+              />
+            </div>
+          </div>
         </CardContent>
       </Card>
 
@@ -136,22 +167,22 @@ export function BuyForm() {
         </CardHeader>
         <CardContent className="space-y-4">
           <Input
-            label="Your Location"
+            label={tSell('fields.location')}
             name="location"
             value={formData.location}
             onChange={handleChange}
-            placeholder="e.g., San Francisco, CA"
+            placeholder={tSell('fields.locationPlaceholder')}
             error={!!errors.location}
             helperText={errors.location || 'Helps sellers know if they can ship to you'}
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Select
-              label="Preferred Contact Method"
+              label={tSell('fields.contactType')}
               name="contact_type"
               value={formData.contact_type}
-              onChange={handleChange}
-              options={CONTACT_OPTIONS}
+              onValueChange={(value) => handleChange({ target: { name: 'contact_type', value } })}
+              options={contactOptions}
             />
 
             <Input
@@ -174,14 +205,14 @@ export function BuyForm() {
           onClick={() => router.back()}
           disabled={loading}
         >
-          Cancel
+          {tSell('cancel')}
         </Button>
         <Button
           type="submit"
           variant="primary"
           loading={loading}
         >
-          Post Buy Request
+          {t('submit')}
         </Button>
       </div>
     </form>

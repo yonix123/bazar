@@ -1,0 +1,133 @@
+{
+    "Navbar": {
+        "home": "Home",
+        "bazaar": "Bazaar",
+        "signIn": "Sign In",
+        "getStarted": "Get Started",
+        "sell": "Sell",
+        "buy": "Buy",
+        "profile": "Profile"
+    },
+    "Footer": {
+        "brand": "Bazaar",
+        "description": "A marketplace for FIRST Robotics teams to buy, sell, and exchange robot parts. Reducing inequality in robotics, one part at a time.",
+        "quickLinks": "Quick Links",
+        "browseListings": "Browse Listings",
+        "sellParts": "Sell Parts",
+        "postBuyRequest": "Post Buy Request",
+        "resources": "Resources",
+        "copyright": "© {year} FTC Bazaar. Open source project.",
+        "developedBy": "Developed by",
+        "forTeams": "for FTC teams"
+    },
+    "Hero": {
+        "badge": "For FIRST Robotics Teams",
+        "title1": "The Place to Share",
+        "title2": "FTC Components and Parts",
+        "subtitle": "Buy, sell, and exchange FTC components with teams worldwide. Reduce waste, save money, and help level the playing field.",
+        "browse": "Browse Listings",
+        "startSelling": "Start Selling"
+    },
+    "Bazaar": {
+        "title": "Bazaar",
+        "subtitle": "Find parts to buy or see what teams are looking for",
+        "sell": "Sell",
+        "buy": "Buy",
+        "showingResults": "Showing {count} {count, plural, =1 {result} other {results}}",
+        "noListings": "No listings found",
+        "noListingsDesc": "Try adjusting your filters or be the first to create a listing!",
+        "sellSomething": "Sell Something",
+        "postBuyRequest": "Post Buy Request",
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page {current} of {total}"
+    },
+    "Filters": {
+        "search": "Search listings...",
+        "allTypes": "All Types",
+        "forSale": "For Sale",
+        "wanted": "Wanted",
+        "allCategories": "All Categories",
+        "anyCondition": "Any Condition",
+        "newest": "Newest First",
+        "priceLowHigh": "Price: Low to High",
+        "priceHighLow": "Price: High to Low",
+        "minPrice": "Min",
+        "maxPrice": "Max",
+        "activeFilters": "Active filters:",
+        "clearAll": "Clear all"
+    },
+    "Listing": {
+        "forSale": "FOR SALE",
+        "wanted": "WANTED",
+        "lookingFor": "Looking for: {item}",
+        "budget": "Budget up to:"
+    },
+    "Categories": {
+        "electronics": "Electronics",
+        "motors": "Motors",
+        "sensors": "Sensors",
+        "structural": "Structural",
+        "wheels": "Wheels",
+        "tools": "Tools",
+        "other": "Other"
+    },
+    "Conditions": {
+        "new": "New",
+        "like_new": "Like New",
+        "good": "Good",
+        "fair": "Fair",
+        "for_parts": "For Parts",
+        "used": "Used",
+        "repaired": "Repaired"
+    },
+    "Forms": {
+        "Sell": {
+            "title": "Create Sell Listing",
+            "subtitle": "List your robot parts for other FTC teams to purchase",
+            "editTitle": "Edit Item Details",
+            "detailsTitle": "Item Details",
+            "fields": {
+                "title": "Title",
+                "titlePlaceholder": "e.g., NEO Brushless Motor (Slightly Used)",
+                "description": "Description",
+                "descriptionPlaceholder": "Describe the item, its condition, any defects, included accessories, etc.",
+                "category": "Category",
+                "condition": "Condition",
+                "price": "Price",
+                "currency": "Currency",
+                "location": "Location",
+                "locationPlaceholder": "e.g., San Francisco, CA",
+                "contactType": "Contact Method",
+                "contactValue": "Contact Info",
+                "contactValuePlaceholder": "@username or Phone number"
+            },
+            "images": {
+                "title": "Images",
+                "uploadText": "Click to upload",
+                "dragText": "or drag and drop",
+                "main": "Main"
+            },
+            "submit": "Create Listing",
+            "update": "Update Listing",
+            "cancel": "Cancel"
+        },
+        "Buy": {
+            "title": "Create Buy Request",
+            "subtitle": "Let other teams know what parts you're looking for",
+            "detailsTitle": "What are you looking for?",
+            "fields": {
+                "itemNeeded": "Item Description",
+                "itemNeededPlaceholder": "Describe the item(s) you need...",
+                "budget": "Maximum Budget"
+            },
+            "submit": "Post Buy Request"
+        },
+        "Validation": {
+            "required": "Required",
+            "tooShort": "Too short",
+            "positive": "Must be positive",
+            "nonNegative": "Cannot be negative"
+        }
+    }
+}

@@ -1,8 +1,11 @@
-import Link from 'next/link';
-import { ArrowRight, Zap, Users, RefreshCw } from 'lucide-react';
+import { Link } from '@/i18n/routing';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 export function Hero() {
+  const t = useTranslations('Hero');
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background effects */}
@@ -21,34 +24,33 @@ export function Hero() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500" />
           </span>
           <span className="text-sm text-primary-400 font-medium">
-            For FIRST Robotics Teams
+            {t('badge')}
           </span>
         </div>
 
         {/* Main heading */}
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 animate-slide-up">
-          <span className="text-foreground">The Place to Share</span>
+          <span className="text-foreground">{t('title1')}</span>
           <br />
-          <span className="gradient-text">FTC Components and Parts</span>
+          <span className="gradient-text">{t('title2')}</span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg sm:text-xl text-foreground-muted max-w-2xl mx-auto mb-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
-          Buy, sell, and exchange FTC components with teams worldwide.
-          Reduce waste, save money, and help level the playing field.
+          {t('subtitle')}
         </p>
 
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{ animationDelay: '200ms' }}>
           <Link href="/bazaar">
             <Button size="lg" className="gap-2 text-base px-8">
-              Browse Listings
+              {t('browse')}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
           <Link href="/sign-up">
             <Button variant="secondary" size="lg" className="gap-2 text-base px-8">
-              Start Selling
+              {t('startSelling')}
             </Button>
           </Link>
         </div>

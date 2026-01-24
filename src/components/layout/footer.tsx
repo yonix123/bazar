@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
-
-// ...
-
-
-import { Github, Heart } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Github } from 'lucide-react';
 
 export function Footer() {
+  const t = useTranslations('Footer');
+
   return (
     <footer className="border-t border-border bg-background-secondary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -21,31 +20,30 @@ export function Footer() {
                 height={40}
                 className="w-7 h-7 object-contain"
               />
-              <span className="text-xl font-bold font-heading text-foreground">Bazaar</span>
+              <span className="text-xl font-bold font-heading text-foreground">{t('brand')}</span>
             </Link>
             <p className="mt-4 text-foreground-muted text-sm max-w-md">
-              A marketplace for FIRST Robotics teams to buy, sell, and exchange robot parts.
-              Reducing inequality in robotics, one part at a time.
+              {t('description')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4">Quick Links</h3>
+            <h3 className="text-sm font-semibold text-foreground mb-4">{t('quickLinks')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/bazaar" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
-                  Browse Listings
+                  {t('browseListings')}
                 </Link>
               </li>
               <li>
                 <Link href="/sell/new" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
-                  Sell Parts
+                  {t('sellParts')}
                 </Link>
               </li>
               <li>
                 <Link href="/buy/new" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
-                  Post Buy Request
+                  {t('postBuyRequest')}
                 </Link>
               </li>
             </ul>
@@ -53,7 +51,7 @@ export function Footer() {
 
           {/* Resources */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4">Resources</h3>
+            <h3 className="text-sm font-semibold text-foreground mb-4">{t('resources')}</h3>
             <ul className="space-y-2">
               <li>
                 <a
@@ -92,7 +90,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-foreground-subtle">
-            © {new Date().getFullYear()} FTC Bazaar. Open source project.
+            {t('copyright', { year: new Date().getFullYear() })}
           </p>
           <div className="flex items-center gap-4">
             <a
@@ -104,7 +102,7 @@ export function Footer() {
               <Github className="h-5 w-5" />
             </a>
             <span className="flex items-center gap-1.5 text-sm text-foreground-subtle">
-              Developed by
+              {t('developedBy')}
               <Image
                 src="https://boltm3.image.firstinspireskz.org/a.svg"
                 alt="Team Bolts"
@@ -112,7 +110,7 @@ export function Footer() {
                 height={20}
                 className="h-5 w-5 object-contain inline-block"
               />
-              for FTC teams
+              {t('forTeams')}
             </span>
           </div>
         </div>

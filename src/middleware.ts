@@ -1,24 +1,35 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import createMiddleware from 'next-intl/middleware';
+import { routing } from '@/i18n/routing';
 
-// Define protected routes
+const intlMiddleware = createMiddleware(routing);
+
 const isProtectedRoute = createRouteMatcher([
-  '/sell/new',
-  '/buy/new',
-  '/profile',
-  '/listing/(.*)/edit',
+  '/:locale/sell/new',
+  '/:locale/buy/new',
+  '/:locale/profile',
+  '/:locale/listing/(.*)/edit',
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
     await (await auth()).protect();
   }
+
+  return intlMiddleware(req);
 });
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
-    '/(api|trpc)(.*)',
-  ],
+    // Enable a redirect to a matching locale at the root
+    '/',
+
+    // Set a cookie to remember the previous locale for
+    // all requests that have a locale prefix
+    '/(ru|en|kz)/:path*',
+
+    // Enable redirects that add missing locales
+    // (e.g. `/pathnames` -> `/en/pathnames`)
+    '/((?!_next|_vercel|.*\\..*).*)'
+  ]
 };
