@@ -19,7 +19,6 @@ import { getListingById, deleteSellListing } from '@/lib/actions/listings';
 import {
   formatPrice,
   formatRelativeDate,
-  CATEGORY_CONFIG,
   CONDITION_CONFIG,
   CONTACT_CONFIG
 } from '@/lib/utils';
@@ -38,7 +37,6 @@ export default async function ListingPage({ params }: ListingPageProps) {
     notFound();
   }
 
-  const categoryConfig = CATEGORY_CONFIG[listing.category];
   const conditionConfig = CONDITION_CONFIG[listing.condition];
   const contactConfig = CONTACT_CONFIG[listing.contact_type];
   const isOwner = userId === listing.owner_id;
@@ -120,9 +118,6 @@ export default async function ListingPage({ params }: ListingPageProps) {
             <CardContent className="p-6 space-y-4">
               {/* Badges */}
               <div className="flex flex-wrap gap-2">
-                <Badge variant="primary">
-                  {categoryConfig.label}
-                </Badge>
                 <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${conditionConfig.color}`}>
                   {conditionConfig.label}
                 </span>

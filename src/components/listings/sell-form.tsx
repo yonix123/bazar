@@ -11,10 +11,11 @@ import { Select } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createSellListing } from '@/lib/actions/listings';
-import { CATEGORIES, CONDITIONS, CONTACT_CONFIG } from '@/lib/utils';
-import { getClient } from '@/lib/supabase/client';
-import { generateImageFilename, isValidImageType, isValidImageSize } from '@/lib/utils';
-import type { CreateSellListingInput, ListingCategory, ItemCondition, ContactType } from '@/types/database';
+import { uploadListingImage } from '@/lib/actions/storage';
+import { CONDITIONS, CONTACT_CONFIG } from '@/lib/utils';
+// import { getClient } from '@/lib/supabase/client'; // Removed client
+import { isValidImageType, isValidImageSize } from '@/lib/utils';
+import type { CreateSellListingInput, ItemCondition, ContactType } from '@/types/database';
 import { type Currency, EXCHANGE_RATES } from '@/context/currency-context';
 
 interface SellFormProps {
@@ -25,7 +26,6 @@ interface SellFormProps {
 export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
   const t = useTranslations('Forms.Sell');
   const tVal = useTranslations('Forms.Validation');
-  const tCats = useTranslations('Categories');
   const tConds = useTranslations('Conditions');
 
   const router = useRouter();
@@ -38,7 +38,6 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
   const [formData, setFormData] = useState<CreateSellListingInput>({
     title: initialData?.title || '',
     description: initialData?.description || '',
-    category: initialData?.category || 'motors',
     condition: initialData?.condition || 'used',
     price: initialData?.price || 0,
     location: initialData?.location || '',
@@ -46,11 +45,6 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
     contact_value: initialData?.contact_value || '',
     images: initialData?.images || [],
   });
-
-  const categoryOptions = CATEGORIES.map(c => ({
-    value: c.value,
-    label: tCats(c.value)
-  }));
 
   const conditionOptions = CONDITIONS.map(c => ({
     value: c.value,
@@ -87,7 +81,6 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
     }
 
     setUploadingImages(true);
-    const supabase = getClient();
     const newImages: string[] = [];
 
     try {
@@ -102,26 +95,20 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
           continue;
         }
 
-        const filename = generateImageFilename(file);
-        const { data, error } = await supabase.storage
-          .from('listing-images')
-          .upload(filename, file, {
-            cacheControl: '3600',
-            upsert: false,
-          });
+        const formData = new FormData();
+        formData.append('file', file);
 
-        if (error) {
-          toast.error(`Failed to upload ${file.name}`);
-          console.error('Upload error:', error);
+        const result = await uploadListingImage(formData);
+
+        if (result.error) {
+          toast.error(`Failed to upload ${file.name}: ${result.error}`);
+          console.error('Upload error:', result.error);
           continue;
         }
 
-        // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('listing-images')
-          .getPublicUrl(data.path);
-
-        newImages.push(publicUrl);
+        if (result.url) {
+          newImages.push(result.url);
+        }
       }
 
       setImages(prev => [...prev, ...newImages]);
@@ -135,15 +122,7 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
   };
 
   const removeImage = async (index: number) => {
-    const imageUrl = images[index];
-    const supabase = getClient();
-
-    // Extract filename from URL
-    const filename = imageUrl.split('/').pop();
-    if (filename) {
-      await supabase.storage.from('listing-images').remove([filename]);
-    }
-
+    // Note: We don't delete from storage on remove for simplicity/safety
     setImages(prev => prev.filter((_, i) => i !== index));
   };
 
@@ -268,14 +247,6 @@ export function SellForm({ initialData, isEditMode = false }: SellFormProps) {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Select
-              label={t('fields.category')}
-              name="category"
-              value={formData.category}
-              onValueChange={(value) => handleChange({ target: { name: 'category', value } })}
-              options={categoryOptions}
-            />
-
             <Select
               label={t('fields.condition')}
               name="condition"

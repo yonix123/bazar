@@ -27,10 +27,6 @@ export async function getSellListings(
     .select('*, owner:profiles(*)', { count: 'exact' });
 
   // Apply filters
-  // Apply filters
-  if (filters.category && filters.category !== 'all') {
-    query = query.eq('category', filters.category);
-  }
   if (filters.condition && filters.condition !== 'all') {
     query = query.eq('condition', filters.condition);
   }
@@ -195,11 +191,30 @@ export async function createBuyRequest(input: CreateBuyRequestInput) {
 
   const supabase = createAdminClient() as any;
 
+  // Ensure profile exists (copied from createSellListing)
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', userId)
+    .single();
+
+  if (!profile) {
+    const user = await currentUser();
+    await supabase.from('profiles').insert({
+      id: userId,
+      email: user?.emailAddresses[0]?.emailAddress || '',
+      display_name: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : null,
+      avatar_url: user?.imageUrl || null,
+      team_number: null,
+    });
+  }
+
   const { data, error } = await supabase
     .from('buy_requests')
     .insert({
       owner_id: userId,
       ...input,
+      images: input.images || [],
     })
     .select()
     .single();

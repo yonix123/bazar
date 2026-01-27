@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import type { ListingCategory, ItemCondition, ContactType } from '@/types/database';
+import type { ItemCondition, ContactType } from '@/types/database';
 
 // Combine Tailwind classes safely
 export function cn(...inputs: ClassValue[]) {
@@ -35,22 +35,6 @@ export function formatRelativeDate(dateString: string): string {
   });
 }
 
-// Category display names and icons
-export const CATEGORY_CONFIG: Record<ListingCategory, { label: string }> = {
-  motors: { label: 'Motors' },
-  sensors: { label: 'Sensors' },
-  controllers: { label: 'Controllers' },
-  wheels: { label: 'Wheels' },
-  structure: { label: 'Structure' },
-  electronics: { label: 'Electronics' },
-  other: { label: 'Other' },
-};
-
-export const CATEGORIES = Object.entries(CATEGORY_CONFIG).map(([value, config]) => ({
-  value: value as ListingCategory,
-  ...config,
-}));
-
 // Condition display names
 export const CONDITION_CONFIG: Record<ItemCondition, { label: string; color: string }> = {
   new: { label: 'New', color: 'text-green-400 bg-green-500/10 border-green-500/20' },
@@ -65,8 +49,8 @@ export const CONDITIONS = Object.entries(CONDITION_CONFIG).map(([value, config])
 
 // Contact type display
 export const CONTACT_CONFIG: Record<ContactType, { label: string; icon: string; prefix: string }> = {
-  telegram: { label: 'Telegram', icon: '✈️', prefix: '@' },
-  phone: { label: 'Phone', icon: '📞', prefix: '' },
+  telegram: { label: 'Telegram', icon: '', prefix: '@' },
+  phone: { label: 'Phone', icon: '', prefix: '' },
 };
 
 // Generate Supabase storage URL
@@ -90,7 +74,11 @@ export function isValidImageSize(file: File): boolean {
 // Generate unique filename for upload
 export function generateImageFilename(file: File): string {
   const ext = file.name.split('.').pop();
-  const uuid = crypto.randomUUID();
+  // Manual UUID v4 generator
+  const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
   return `${uuid}.${ext}`;
 }
 

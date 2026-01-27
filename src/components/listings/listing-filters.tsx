@@ -6,7 +6,7 @@ import { useState, useTransition, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { CATEGORIES, CONDITIONS } from '@/lib/utils';
+import { CONDITIONS } from '@/lib/utils';
 import { debounce } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 
@@ -16,18 +16,12 @@ export function ListingFilters() {
   const [isPending, startTransition] = useTransition();
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const t = useTranslations('Filters');
-  const tCategories = useTranslations('Categories');
   const tConditions = useTranslations('Conditions');
 
   const TYPE_OPTIONS = [
     { value: 'all', label: t('allTypes') },
     { value: 'sell', label: t('forSale') },
     { value: 'buy', label: t('wanted') },
-  ];
-
-  const CATEGORY_OPTIONS = [
-    { value: 'all', label: t('allCategories') },
-    ...CATEGORIES.map(c => ({ value: c.value, label: tCategories(c.value as any) })),
   ];
 
   const CONDITION_OPTIONS = [
@@ -44,7 +38,6 @@ export function ListingFilters() {
   // Get current values from URL
   const currentSearch = searchParams.get('search') || '';
   const currentType = searchParams.get('type') || 'all';
-  const currentCategory = searchParams.get('category') || 'all';
   const currentCondition = searchParams.get('condition') || 'all';
   const currentSort = searchParams.get('sort') || 'newest';
   const currentMinPrice = searchParams.get('minPrice') || '';
@@ -93,7 +86,7 @@ export function ListingFilters() {
   };
 
   const hasActiveFilters = currentSearch || currentType !== 'all' ||
-    currentCategory !== 'all' || currentCondition !== 'all' ||
+    currentCondition !== 'all' ||
     currentMinPrice || currentMaxPrice;
 
   return (
@@ -125,11 +118,6 @@ export function ListingFilters() {
           options={TYPE_OPTIONS}
           value={currentType}
           onValueChange={(value) => updateFilters({ type: value })}
-        />
-        <Select
-          options={CATEGORY_OPTIONS}
-          value={currentCategory}
-          onValueChange={(value) => updateFilters({ category: value })}
         />
         <Select
           options={CONDITION_OPTIONS}
@@ -171,11 +159,6 @@ export function ListingFilters() {
           {currentType !== 'all' && (
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-background-elevated border border-border">
               {TYPE_OPTIONS.find(t => t.value === currentType)?.label}
-            </span>
-          )}
-          {currentCategory !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-background-elevated border border-border">
-              {CATEGORY_OPTIONS.find(c => c.value === currentCategory)?.label}
             </span>
           )}
           {currentCondition !== 'all' && (

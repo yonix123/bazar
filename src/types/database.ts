@@ -6,15 +6,6 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-export type ListingCategory =
-  | 'motors'
-  | 'sensors'
-  | 'controllers'
-  | 'wheels'
-  | 'structure'
-  | 'electronics'
-  | 'other';
-
 export type ItemCondition = 'new' | 'used' | 'repaired';
 
 export type ContactType = 'telegram' | 'phone';
@@ -34,7 +25,6 @@ export interface SellListing {
   owner_id: string;
   title: string;
   description: string;
-  category: ListingCategory;
   condition: ItemCondition;
   price: number;
   location: string;
@@ -55,6 +45,7 @@ export interface BuyRequest {
   location: string;
   contact_type: ContactType;
   contact_value: string;
+  images: string[];
   created_at: string;
   updated_at: string;
   // Joined data
@@ -70,7 +61,6 @@ export type BazaarItem =
 export interface CreateSellListingInput {
   title: string;
   description: string;
-  category: ListingCategory;
   condition: ItemCondition;
   price: number;
   location: string;
@@ -85,12 +75,12 @@ export interface CreateBuyRequestInput {
   location: string;
   contact_type: ContactType;
   contact_value: string;
+  images: string[];
 }
 
 // Filter types
 export interface BazaarFilters {
   type?: 'all' | 'sell' | 'buy';
-  category?: ListingCategory | 'all';
   condition?: ItemCondition | 'all';
   minPrice?: number;
   maxPrice?: number;
@@ -153,7 +143,6 @@ export interface Database {
       [_ in never]: never;
     };
     Enums: {
-      listing_category: ListingCategory;
       item_condition: ItemCondition;
       contact_type: ContactType;
     };

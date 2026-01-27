@@ -48,15 +48,15 @@ export function TeamSection() {
                             <CardContent className="p-0 relative aspect-[4/3]">
                                 <Image
                                     src="/5442735707895040870.jpg"
-                                    alt="Team Bolts"
+                                    alt="bolt.m3"
                                     fill
                                     className="object-cover hover:scale-105 transition-transform duration-700"
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
                                 <div className="absolute bottom-6 left-6 right-6">
-                                    <p className="text-white font-bold text-lg drop-shadow-md">Team Bolts</p>
-                                    <p className="text-white/80 text-sm">RFMSH Robotics Team</p>
+                                    <p className="text-white font-bold text-lg drop-shadow-md">bolt.m3</p>
+                                    <p className="text-white/80 text-sm">NPsMS Almaty Robotics Team</p>
                                 </div>
                             </CardContent>
                         </Card>

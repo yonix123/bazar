@@ -8,7 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import {
   formatRelativeDate,
   truncate,
-  CATEGORY_CONFIG,
   CONDITION_CONFIG
 } from '@/lib/utils';
 import type { SellListing, BuyRequest } from '@/types/database';
@@ -20,10 +19,8 @@ interface SellListingCardProps {
 }
 
 export function SellListingCard({ listing }: SellListingCardProps) {
-  const categoryConfig = CATEGORY_CONFIG[listing.category];
   const conditionConfig = CONDITION_CONFIG[listing.condition];
   const t = useTranslations('Listing');
-  const tCategories = useTranslations('Categories');
   const tConditions = useTranslations('Conditions');
   const { formatPrice } = useCurrency();
 
@@ -53,9 +50,7 @@ export function SellListingCard({ listing }: SellListingCardProps) {
 
           {/* Badges overlay */}
           <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-            <Badge variant="primary" className="backdrop-blur-sm bg-primary-500/80">
-              {tCategories(listing.category as any)}
-            </Badge>
+
           </div>
 
           {/* Condition badge */}

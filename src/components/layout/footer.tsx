@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Github } from 'lucide-react';
+import { Github, Instagram } from 'lucide-react';
 
 export function Footer() {
   const t = useTranslations('Footer');
@@ -55,32 +55,32 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="https://www.firstinspires.org/robotics/FTC"
+                  href="https://www.firstinspires.org"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-foreground-muted hover:text-foreground transition-colors"
                 >
-                  FIRST Robotics
+                  First Tech Challenge
                 </a>
               </li>
               <li>
                 <a
-                  href="https://www.thebluealliance.com"
+                  href="https://www.ustem.kz/kz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-foreground-muted hover:text-foreground transition-colors"
                 >
-                  The Blue Alliance
+                  USTEM Foundation
                 </a>
               </li>
               <li>
                 <a
-                  href="https://www.chiefdelphi.com"
+                  href="https://www.instagram.com/bolt.m3?igsh=MXNzZmlid3N2aGc1dQ%3D%3D&utm_source=qr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-foreground-muted hover:text-foreground transition-colors"
                 >
-                  Chief Delphi
+                  Instagram
                 </a>
               </li>
             </ul>
@@ -94,6 +94,14 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <a
+              href="https://www.instagram.com/bolt.m3?igsh=MXNzZmlid3N2aGc1dQ%3D%3D&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground-muted hover:text-foreground transition-colors"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
+            <a
               href="#"
               target="_blank"
               rel="noopener noreferrer"
@@ -105,7 +113,7 @@ export function Footer() {
               {t('developedBy')}
               <Image
                 src="https://boltm3.image.firstinspireskz.org/a.svg"
-                alt="Team Bolts"
+                alt="T"
                 width={20}
                 height={20}
                 className="h-5 w-5 object-contain inline-block"

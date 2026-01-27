@@ -21,7 +21,6 @@ async function ListingsGrid({ searchParams }: { searchParams: Record<string, str
 
   const filters: BazaarFilters = {
     type: type as 'all' | 'sell' | 'buy',
-    category: searchParams.category as BazaarFilters['category'],
     condition: searchParams.condition as BazaarFilters['condition'],
     minPrice: searchParams.minPrice ? parseFloat(searchParams.minPrice) : undefined,
     maxPrice: searchParams.maxPrice ? parseFloat(searchParams.maxPrice) : undefined,

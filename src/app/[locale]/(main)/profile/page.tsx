@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { getUserListings, deleteSellListing, deleteBuyRequest } from '@/lib/actions/listings';
 import { getCurrentProfile } from '@/lib/actions/profile';
-import { formatPrice, formatRelativeDate, CATEGORY_CONFIG, CONDITION_CONFIG } from '@/lib/utils';
+import { formatPrice, formatRelativeDate, CONDITION_CONFIG } from '@/lib/utils';
 
 export default async function ProfilePage() {
   const { userId } = await auth();
@@ -104,7 +104,6 @@ export default async function ProfilePage() {
             ) : (
               <div className="space-y-4">
                 {sellListings.map((listing) => {
-                  const categoryConfig = CATEGORY_CONFIG[listing.category];
                   const conditionConfig = CONDITION_CONFIG[listing.condition];
 
                   return (
