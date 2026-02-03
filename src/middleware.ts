@@ -11,25 +11,17 @@ const isProtectedRoute = createRouteMatcher([
   '/:locale/listing/(.*)/edit',
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
+export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) {
-    await (await auth()).protect();
+    auth().protect();
   }
-
   return intlMiddleware(req);
 });
 
 export const config = {
   matcher: [
-    // Enable a redirect to a matching locale at the root
     '/',
-
-    // Set a cookie to remember the previous locale for
-    // all requests that have a locale prefix
     '/(ru|en|kz)/:path*',
-
-    // Enable redirects that add missing locales
-    // (e.g. `/pathnames` -> `/en/pathnames`)
     '/((?!_next|_vercel|.*\\..*).*)'
   ]
 };
